@@ -11,7 +11,7 @@ export const metadata: Metadata = {
     "Satin Store adalah merchandise resmi Tepus Kaki. Kaos, hoodie, topi, dan tote bag edisi eksklusif komunitas — order cepat via WhatsApp.",
   authors: [{ name: "Satin Store" }],
   openGraph: {
-    siteName: "Satin Store",
+    siteName: "TepusKaki.ID",
     type: "website",
     title: "Satin Store — Merchandise Resmi Tepus Kaki",
     description:
