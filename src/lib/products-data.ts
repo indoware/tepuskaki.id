@@ -39,13 +39,18 @@ export const getProducts = (): Product[] => {
     .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
 };
 
-export const getFeaturedProducts = () => getProducts().filter((p) => p.featured).slice(0, 5);
+export const getFeaturedProducts = () =>
+  getProducts()
+    .filter((p) => p.featured)
+    .slice(0, 5);
 
 export const getCategories = () => Array.from(new Set(getProducts().map((p) => p.category)));
 
-export const getAllTags = () => Array.from(new Set(getProducts().flatMap((p) => p.tags ?? []))).sort();
+export const getAllTags = () =>
+  Array.from(new Set(getProducts().flatMap((p) => p.tags ?? []))).sort();
 
-export const findCategoryBySlug = (slug: string) => getCategories().find((c) => slugify(c) === slug);
+export const findCategoryBySlug = (slug: string) =>
+  getCategories().find((c) => slugify(c) === slug);
 
 export const productBySlug = (slug: string) => getProducts().find((p) => p.slug === slug);
 

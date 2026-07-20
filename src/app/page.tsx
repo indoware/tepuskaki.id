@@ -13,7 +13,7 @@ export const revalidate = 60; // ISR: revalidate every 60 seconds
 export default function StorePage() {
   const categories = getCategories();
   const products = getProducts();
-  
+
   return (
     <div className="space-y-8 px-5 pb-10 pt-6">
       <section className="rounded-3xl bg-primary p-6 text-primary-foreground">

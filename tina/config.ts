@@ -24,7 +24,7 @@ export default defineConfig({
           tina: {
             indexerToken: searchIndexToken,
             fuzzyEnabled: true,
-            stopwordLanguages: ['eng', 'ind'],
+            stopwordLanguages: ["eng", "ind"],
           },
           indexBatchSize: 100,
           maxSearchIndexFieldLength: 80,
@@ -52,7 +52,13 @@ export default defineConfig({
             required: true,
             searchable: true,
           },
-          { type: "number", name: "price", label: "Harga (IDR)", required: true, searchable: false },
+          {
+            type: "number",
+            name: "price",
+            label: "Harga (IDR)",
+            required: true,
+            searchable: false,
+          },
           { type: "string", name: "sku", label: "SKU", searchable: true },
           {
             type: "string",

@@ -34,13 +34,7 @@ export function HeroSlider() {
               <article className="overflow-hidden rounded-3xl bg-primary text-primary-foreground">
                 <Link href={`/produk/${p.slug}`} className="block">
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-primary">
-                    <Image
-                      src={p.image}
-                      alt={p.name}
-                      fill
-                      className="object-cover"
-                      sizes="85vw"
-                    />
+                    <Image src={p.image} alt={p.name} fill className="object-cover" sizes="85vw" />
                     <div className="absolute left-4 top-4">
                       <Badge className="rounded-full bg-secondary px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-secondary-foreground hover:bg-secondary">
                         {p.category}
