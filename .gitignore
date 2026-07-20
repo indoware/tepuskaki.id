@@ -21,6 +21,10 @@ dist-ssr
 .wrangler/
 .dev.vars
 
+# Tina CMS
+.tina
+tina/__generated__
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
