@@ -2,19 +2,21 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
 import { slugify } from "@/lib/products";
-import { allTags, productsByTag } from "@/lib/products-data";
+import { getAllTags, productsByTag } from "@/lib/products-data";
 
 interface PageProps {
   params: Promise<{ tag: string }>;
 }
 
 export async function generateStaticParams() {
+  const allTags = getAllTags();
   return allTags.map((t) => ({
     tag: slugify(t),
   }));
 }
 
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+  const allTags = getAllTags();
   const { tag } = await params;
   const actualTag = allTags.find((t) => slugify(t) === tag) || tag;
   return {
@@ -24,6 +26,7 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
 }
 
 export default async function TagPage({ params }: PageProps) {
+  const allTags = getAllTags();
   const { tag } = await params;
   const actualTag = allTags.find((t) => slugify(t) === tag);
   if (!actualTag) {

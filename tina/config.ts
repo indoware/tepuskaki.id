@@ -2,16 +2,12 @@ import { defineConfig } from "tinacms";
 
 const branch =
   process.env.GITHUB_BRANCH || process.env.VERCEL_GIT_COMMIT_REF || process.env.HEAD || "main";
+const searchIndexToken = process.env.TINA_SEARCH_TOKEN;
 
-const clientId = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
-const token = process.env.TINA_TOKEN;
-
-// Gunakan Tina Cloud hanya di Vercel (production), lokal mode di development
-const isVercel = !!process.env.VERCEL;
-const useCloud = isVercel && clientId && token;
-
-const config = defineConfig({
+export default defineConfig({
   branch,
+  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID || null,
+  token: process.env.TINA_TOKEN || null,
   build: {
     outputFolder: "admin",
     publicFolder: "public",
@@ -22,6 +18,19 @@ const config = defineConfig({
       publicFolder: "public",
     },
   },
+  ...(searchIndexToken
+    ? {
+        search: {
+          tina: {
+            indexerToken: searchIndexToken,
+            fuzzyEnabled: true,
+            stopwordLanguages: ['eng', 'ind'],
+          },
+          indexBatchSize: 100,
+          maxSearchIndexFieldLength: 80,
+        },
+      }
+    : {}),
   schema: {
     collections: [
       {
@@ -29,36 +38,57 @@ const config = defineConfig({
         label: "Produk",
         path: "content/products",
         format: "json",
+        ui: {
+          createDocument: {
+            label: "Add Produk",
+          },
+        },
         fields: [
-          { type: "string", name: "name", label: "Nama Produk", isTitle: true, required: true },
-          { type: "number", name: "price", label: "Harga (IDR)", required: true },
-          { type: "string", name: "sku", label: "SKU" },
+          {
+            type: "string",
+            name: "name",
+            label: "Nama Produk",
+            isTitle: true,
+            required: true,
+            searchable: true,
+          },
+          { type: "number", name: "price", label: "Harga (IDR)", required: true, searchable: false },
+          { type: "string", name: "sku", label: "SKU", searchable: true },
           {
             type: "string",
             name: "category",
             label: "Kategori",
-            options: ["T-Shirt", "Topi", "Tote Bag", "Hoodie", "Aksesori"],
+            options: ["T-Shirt"],
+            searchable: true,
           },
           {
             type: "string",
             name: "description",
             label: "Deskripsi Singkat",
+            searchable: false,
             ui: { component: "textarea" },
           },
           {
             type: "string",
             name: "body",
             label: "Deskripsi Lengkap (Markdown)",
+            searchable: false,
             ui: { component: "textarea" },
           },
           { type: "image", name: "image", label: "Gambar Produk" },
-          { type: "string", name: "tags", label: "Tags", list: true },
-          { type: "boolean", name: "featured", label: "Tampilkan di Hero Slider" },
-          { type: "string", name: "seoTitle", label: "SEO Title" },
+          { type: "string", name: "tags", label: "Tags", list: true, searchable: true },
+          {
+            type: "boolean",
+            name: "featured",
+            label: "Tampilkan di Hero Slider",
+            searchable: false,
+          },
+          { type: "string", name: "seoTitle", label: "SEO Title", searchable: false },
           {
             type: "string",
             name: "seoDescription",
             label: "SEO Description",
+            searchable: false,
             ui: { component: "textarea" },
           },
         ],
@@ -69,24 +99,24 @@ const config = defineConfig({
         path: "content/pages",
         format: "md",
         fields: [
-          { type: "string", name: "title", label: "Judul", isTitle: true, required: true },
+          {
+            type: "string",
+            name: "title",
+            label: "Judul",
+            isTitle: true,
+            required: true,
+            searchable: true,
+          },
           {
             type: "string",
             name: "description",
             label: "Deskripsi SEO",
+            searchable: false,
             ui: { component: "textarea" },
           },
-          { type: "rich-text", name: "body", label: "Konten", isBody: true },
+          { type: "rich-text", name: "body", label: "Konten", isBody: true, searchable: false },
         ],
       },
     ],
   },
 });
-
-// Tambahkan clientId dan token hanya jika di Vercel dan env vars tersedia
-if (useCloud) {
-  config.clientId = clientId;
-  config.token = token;
-}
-
-export default config;

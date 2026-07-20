@@ -2,13 +2,14 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { ProductCard } from "@/components/product-card";
 import { slugify } from "@/lib/products";
-import { findCategoryBySlug, productsByCategorySlug, products } from "@/lib/products-data";
+import { findCategoryBySlug, productsByCategorySlug, getProducts } from "@/lib/products-data";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
+  const products = getProducts();
   const categories = Array.from(new Set(products.map((p) => p.category)));
   return categories.map((c) => ({
     slug: slugify(c),
@@ -24,6 +25,8 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
     description: `Koleksi produk kategori ${category} di Satin Store.`,
   };
 }
+
+export const revalidate = 60; // ISR: revalidate every 60 seconds
 
 export default async function CategoryPage({ params }: PageProps) {
   const { slug } = await params;

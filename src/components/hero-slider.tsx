@@ -1,12 +1,14 @@
 import Link from "next/link";
+import Image from "next/image";
 import { MessageCircle } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { buildWhatsAppLink, formatIDR } from "@/lib/products";
-import { featuredProducts } from "@/lib/products-data";
+import { getFeaturedProducts } from "@/lib/products-data";
 
 export function HeroSlider() {
+  const featuredProducts = getFeaturedProducts();
   if (featuredProducts.length === 0) return null;
   return (
     <section aria-label="Produk pilihan">
@@ -32,12 +34,12 @@ export function HeroSlider() {
               <article className="overflow-hidden rounded-3xl bg-primary text-primary-foreground">
                 <Link href={`/produk/${p.slug}`} className="block">
                   <div className="relative aspect-[4/3] w-full overflow-hidden bg-primary">
-                    <img
+                    <Image
                       src={p.image}
                       alt={p.name}
-                      width={1024}
-                      height={1024}
-                      className="h-full w-full object-cover"
+                      fill
+                      className="object-cover"
+                      sizes="85vw"
                     />
                     <div className="absolute left-4 top-4">
                       <Badge className="rounded-full bg-secondary px-3 py-1 text-[10px] font-bold uppercase tracking-widest text-secondary-foreground hover:bg-secondary">

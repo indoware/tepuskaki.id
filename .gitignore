@@ -15,15 +15,11 @@ dist-ssr
 .tanstack/**
 .nitro
 *.local
-.next 
+.next
 
 # Wrangler / Cloudflare
 .wrangler/
 .dev.vars
-
-# Tina CMS
-.tina
-tina/__generated__
 
 # Editor directories and files
 .vscode/*

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import Image from "next/image";
 import { notFound } from "next/navigation";
 import { MessageCircle, Tag } from "lucide-react";
 import { marked } from "marked";
@@ -9,13 +10,14 @@ import { Button } from "@/components/ui/button";
 import { ProductCard } from "@/components/product-card";
 import { ShareButton } from "@/components/share-button";
 import { buildWhatsAppLink, formatIDR, slugify } from "@/lib/products";
-import { productBySlug, products } from "@/lib/products-data";
+import { productBySlug, getProducts } from "@/lib/products-data";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
+  const products = getProducts();
   return products.map((p) => ({
     slug: p.slug,
   }));
@@ -28,17 +30,25 @@ export async function generateMetadata({ params }: PageProps): Promise<Metadata>
   const title = p.seoTitle ?? `${p.name} — Satin Store`;
   const description = p.seoDescription ?? p.description;
   const url = `/produk/${slug}`;
+  const thumbnailUrl = `/api/thumbnail?slug=${slug}`;
   return {
     title,
     description,
     openGraph: {
       title,
       description,
-      type: "article",
       url,
+      images: [{ url: thumbnailUrl }],
+    },
+    twitter: {
+      title,
+      description,
+      images: [thumbnailUrl],
     },
   };
 }
+
+export const revalidate = 60; // ISR: revalidate every 60 seconds
 
 export default async function ProductDetail({ params }: PageProps) {
   const { slug } = await params;
@@ -48,37 +58,62 @@ export default async function ProductDetail({ params }: PageProps) {
   }
 
   const bodyHtml = await marked.parse(product.body ?? "");
+  const products = getProducts();
   const related = products
     .filter((p) => p.slug !== product.slug && p.category === product.category)
     .slice(0, 4);
 
   return (
-    <article className="space-y-6 px-5 pb-10 pt-4">
-      <nav aria-label="Breadcrumb" className="text-xs text-muted-foreground">
-        <ol className="flex flex-wrap items-center gap-1">
-          <li>
-            <Link href="/" className="hover:underline">
-              Beranda
-            </Link>
-          </li>
-          <li>/</li>
-          <li>
-            <Link href={`/kategori/${slugify(product.category)}`} className="hover:underline">
-              {product.category}
-            </Link>
-          </li>
-          <li>/</li>
-          <li className="font-semibold text-foreground">{product.name}</li>
-        </ol>
-      </nav>
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "Product",
+            name: product.name,
+            image: product.image,
+            description: product.description,
+            sku: product.sku,
+            brand: {
+              "@type": "Brand",
+              name: "Tepus Kaki Merch",
+            },
+            offers: {
+              "@type": "Offer",
+              price: product.price,
+              priceCurrency: "IDR",
+              availability: "https://schema.org/InStock",
+            },
+          }),
+        }}
+      />
+      <article className="space-y-6 px-5 pb-10 pt-4">
+        <nav aria-label="Breadcrumb" className="text-xs text-muted-foreground">
+          <ol className="flex flex-wrap items-center gap-1">
+            <li>
+              <Link href="/" className="hover:underline">
+                Beranda
+              </Link>
+            </li>
+            <li>/</li>
+            <li>
+              <Link href={`/kategori/${slugify(product.category)}`} className="hover:underline">
+                {product.category}
+              </Link>
+            </li>
+            <li>/</li>
+            <li className="font-semibold text-foreground">{product.name}</li>
+          </ol>
+        </nav>
 
-      <div className="overflow-hidden rounded-3xl bg-muted">
-        <img
+      <div className="overflow-hidden rounded-3xl bg-muted relative aspect-square w-full">
+        <Image
           src={product.image}
           alt={product.name}
-          width={1024}
-          height={1024}
-          className="aspect-square w-full object-cover"
+          fill
+          className="object-cover"
+          sizes="(max-width: 768px) 100vw, 50vw"
         />
       </div>
 
@@ -151,6 +186,7 @@ export default async function ProductDetail({ params }: PageProps) {
           </div>
         </section>
       )}
-    </article>
+      </article>
+    </>
   );
 }

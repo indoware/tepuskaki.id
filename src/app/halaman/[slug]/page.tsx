@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { pageBySlug, pages } from "@/lib/pages";
+import { pageBySlug, getPages } from "@/lib/pages";
 
 interface PageProps {
   params: Promise<{ slug: string }>;
 }
 
 export async function generateStaticParams() {
+  const pages = getPages();
   return pages.map((p) => ({
     slug: p.slug,
   }));

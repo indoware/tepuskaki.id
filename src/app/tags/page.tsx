@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Tag } from "lucide-react";
 import { slugify } from "@/lib/products";
-import { allTags } from "@/lib/products-data";
+import { getAllTags } from "@/lib/products-data";
 
 export const metadata: Metadata = {
   title: "Semua Tags — Satin Store",
@@ -10,6 +10,7 @@ export const metadata: Metadata = {
 };
 
 export default function TagsPage() {
+  const allTags = getAllTags();
   return (
     <div className="space-y-6 px-5 pb-10 pt-6">
       <header>

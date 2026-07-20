@@ -4,7 +4,8 @@
   "type": "module",
   "scripts": {
     "dev": "tinacms dev -c \"next dev\"",
-    "build": "node build.js",
+    "build": "next build",
+    "build:tina": "tinacms build && next build",
     "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write ."
@@ -70,7 +71,7 @@
     "eslint": "^9.32.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.6",
-    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-hooks": "^5.2.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
     "postcss": "^8.4.49",
@@ -79,5 +80,5 @@
     "typescript": "^5.8.3",
     "typescript-eslint": "^8.56.1"
   },
-  "packageManager": "pnpm@10.0.0"
+  "packageManager": "pnpm@9.0.0+sha512.50867c15605c1e5508e255202e56ef021be68e193a0566d7673a70c8a2c081f35d969615c533c7696c637c3c36e8a0b31727b7e271b2c0640705e38f6e0538b9"
 }

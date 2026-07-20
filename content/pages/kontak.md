@@ -1,6 +1,6 @@
 ---
 title: Kontak Satin Store
-description: Hubungi Satin Store — merchandise resmi Tepus Kaki. WhatsApp, Instagram, dan email untuk pemesanan, restock, dan kolaborasi.
+description: 'Hubungi Satin Store — merchandise resmi Tepus Kaki. WhatsApp, Instagram, dan email untuk pemesanan, restock, dan kolaborasi.'
 ---
 
 # Kontak Kami
@@ -17,10 +17,10 @@ Follow **@satinstore** untuk update restock, giveaway, dan momen keluarga Tepus 
 
 ## Email
 
-Kerja sama & wholesale: **hello@satinstore.id**
+Kerja sama & wholesale: **[hello@satinstore.id](mailto:hello@satinstore.id)**
 
 ## Basecamp
 
-Tepus Kaki — Yogyakarta, Indonesia
+Tepus Kaki — Madiun, Jawa Timur, Indonesia..
 
-_Kunjungan hanya dengan janji temu._
+*Kunjungan hanya dengan janji temu.*

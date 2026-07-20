@@ -22,7 +22,7 @@ const getImgSrc = (imgObj: any) => {
   return imgObj.src || "";
 };
 
-const getProducts = (): Product[] => {
+export const getProducts = (): Product[] => {
   const dirPath = path.join(process.cwd(), "content/products");
   if (!fs.existsSync(dirPath)) return [];
   const files = fs.readdirSync(dirPath);
@@ -39,20 +39,18 @@ const getProducts = (): Product[] => {
     .sort((a, b) => (b.featured ? 1 : 0) - (a.featured ? 1 : 0));
 };
 
-export const products = getProducts();
+export const getFeaturedProducts = () => getProducts().filter((p) => p.featured).slice(0, 5);
 
-export const featuredProducts = products.filter((p) => p.featured).slice(0, 5);
+export const getCategories = () => Array.from(new Set(getProducts().map((p) => p.category)));
 
-export const categories = Array.from(new Set(products.map((p) => p.category)));
+export const getAllTags = () => Array.from(new Set(getProducts().flatMap((p) => p.tags ?? []))).sort();
 
-export const allTags = Array.from(new Set(products.flatMap((p) => p.tags ?? []))).sort();
+export const findCategoryBySlug = (slug: string) => getCategories().find((c) => slugify(c) === slug);
 
-export const findCategoryBySlug = (slug: string) => categories.find((c) => slugify(c) === slug);
-
-export const productBySlug = (slug: string) => products.find((p) => p.slug === slug);
+export const productBySlug = (slug: string) => getProducts().find((p) => p.slug === slug);
 
 export const productsByCategorySlug = (slug: string) =>
-  products.filter((p) => slugify(p.category) === slug);
+  getProducts().filter((p) => slugify(p.category) === slug);
 
 export const productsByTag = (tag: string) =>
-  products.filter((p) => (p.tags ?? []).map(slugify).includes(slugify(tag)));
+  getProducts().filter((p) => (p.tags ?? []).map(slugify).includes(slugify(tag)));

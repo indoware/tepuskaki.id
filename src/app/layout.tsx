@@ -1,8 +1,7 @@
 import type { Metadata } from "next";
-import React from "react";
 import { SiteHeader } from "@/components/site-header";
 import { SiteFooter } from "@/components/site-footer";
-import { categories } from "@/lib/products-data";
+import { getCategories } from "@/lib/products-data";
 import "../styles.css";
 
 export const metadata: Metadata = {
@@ -11,7 +10,7 @@ export const metadata: Metadata = {
     "Satin Store adalah merchandise resmi Tepus Kaki. Kaos, hoodie, topi, dan tote bag edisi eksklusif komunitas — order cepat via WhatsApp.",
   authors: [{ name: "Satin Store" }],
   openGraph: {
-    siteName: "TepusKaki.ID",
+    siteName: "Satin Store",
     type: "website",
     title: "Satin Store — Merchandise Resmi Tepus Kaki",
     description:
@@ -51,6 +50,7 @@ export const viewport = {
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
+  const categories = getCategories();
   return (
     <html lang="id">
       <body>

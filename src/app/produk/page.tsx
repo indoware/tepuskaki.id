@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { ProductCard } from "@/components/product-card";
-import { products } from "@/lib/products-data";
+import { getProducts } from "@/lib/products-data";
 
 export const metadata: Metadata = {
   title: "Semua Produk — Tepus Kaki",
@@ -12,7 +12,10 @@ export const metadata: Metadata = {
   },
 };
 
+export const revalidate = 60; // ISR: revalidate every 60 seconds
+
 export default function ProductsPage() {
+  const products = getProducts();
   return (
     <div className="space-y-6 px-5 pb-10 pt-6">
       <header>

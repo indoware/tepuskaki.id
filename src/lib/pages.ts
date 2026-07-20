@@ -23,7 +23,7 @@ function parseFrontmatter(src: string): { data: Record<string, string>; body: st
 
 marked.setOptions({ gfm: true, breaks: false });
 
-const getPages = (): PageDoc[] => {
+export const getPages = (): PageDoc[] => {
   const dirPath = path.join(process.cwd(), "content/pages");
   if (!fs.existsSync(dirPath)) return [];
   const files = fs.readdirSync(dirPath);
@@ -44,6 +44,4 @@ const getPages = (): PageDoc[] => {
     });
 };
 
-export const pages = getPages();
-
-export const pageBySlug = (slug: string) => pages.find((p) => p.slug === slug);
+export const pageBySlug = (slug: string) => getPages().find((p) => p.slug === slug);

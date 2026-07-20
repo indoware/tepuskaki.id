@@ -2,9 +2,10 @@ import Link from "next/link";
 import { Instagram, Mail, MessageCircle } from "lucide-react";
 
 import { slugify, waGeneralLink } from "@/lib/products";
-import { categories } from "@/lib/products-data";
+import { getCategories } from "@/lib/products-data";
 
 export function SiteFooter() {
+  const categories = getCategories();
   return (
     <footer className="mt-10 border-t border-foreground/10 bg-foreground text-background">
       <div className="space-y-6 px-5 py-8">
