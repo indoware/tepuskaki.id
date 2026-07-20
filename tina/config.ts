@@ -6,10 +6,12 @@ const branch =
 const clientId = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
 const token = process.env.TINA_TOKEN;
 
-export default defineConfig({
+// Gunakan Tina Cloud hanya di Vercel (production), lokal mode di development
+const isVercel = !!process.env.VERCEL;
+const useCloud = isVercel && clientId && token;
+
+const config = defineConfig({
   branch,
-  // Hanya gunakan clientId dan token jika keduanya tersedia (mode Tina Cloud)
-  ...(clientId && token ? { clientId, token } : {}),
   build: {
     outputFolder: "admin",
     publicFolder: "public",
@@ -80,3 +82,11 @@ export default defineConfig({
     ],
   },
 });
+
+// Tambahkan clientId dan token hanya jika di Vercel dan env vars tersedia
+if (useCloud) {
+  config.clientId = clientId;
+  config.token = token;
+}
+
+export default config;
