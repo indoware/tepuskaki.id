@@ -38,11 +38,7 @@ export default defineConfig({
         label: "Produk",
         path: "content/products",
         format: "json",
-        ui: {
-          createDocument: {
-            label: "Add Produk",
-          },
-        },
+
         fields: [
           {
             type: "string",
