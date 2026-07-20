@@ -4,7 +4,7 @@
   "type": "module",
   "scripts": {
     "dev": "tinacms dev -c \"next dev\"",
-    "build": "tinacms build --local && next build",
+    "build": "node build.js",
     "start": "next start",
     "lint": "eslint .",
     "format": "prettier --write ."
@@ -70,7 +70,7 @@
     "eslint": "^9.32.0",
     "eslint-config-prettier": "^10.1.1",
     "eslint-plugin-prettier": "^5.2.6",
-    "eslint-plugin-react-hooks": "^5.2.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
     "eslint-plugin-react-refresh": "^0.4.20",
     "globals": "^15.15.0",
     "postcss": "^8.4.49",
