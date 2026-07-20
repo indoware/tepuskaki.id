@@ -1,0 +1,21 @@
+fragment ProductParts on Product {
+  __typename
+  name
+  price
+  sku
+  category
+  description
+  body
+  image
+  tags
+  featured
+  seoTitle
+  seoDescription
+}
+
+fragment PageParts on Page {
+  __typename
+  title
+  description
+  body
+}
