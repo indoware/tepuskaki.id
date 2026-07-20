@@ -34,11 +34,6 @@ var config_default = defineConfig({
         label: "Produk",
         path: "content/products",
         format: "json",
-        ui: {
-          createDocument: {
-            label: "Add Produk"
-          }
-        },
         fields: [
           {
             type: "string",
@@ -48,7 +43,13 @@ var config_default = defineConfig({
             required: true,
             searchable: true
           },
-          { type: "number", name: "price", label: "Harga (IDR)", required: true, searchable: false },
+          {
+            type: "number",
+            name: "price",
+            label: "Harga (IDR)",
+            required: true,
+            searchable: false
+          },
           { type: "string", name: "sku", label: "SKU", searchable: true },
           {
             type: "string",
