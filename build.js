@@ -8,11 +8,11 @@ try {
   console.log(`Building in ${isVercel ? "Vercel" : "local"} environment...`);
 
   if (isVercel) {
-    // Di Vercel: skip TinaCMS build, langsung ke Next.js build
-    console.log("Skipping TinaCMS build on Vercel...");
-    execSync("next build", { stdio: "inherit" });
+    // Di Vercel: jalankan TinaCMS build untuk Tina Cloud
+    console.log("Running TinaCMS build on Vercel...");
+    execSync("tinacms build && next build", { stdio: "inherit" });
   } else {
-    // Di lokal: jalankan TinaCMS build + Next.js build
+    // Di lokal: jalankan TinaCMS build + Next.js build (local mode)
     console.log("Running TinaCMS build locally...");
     execSync("tinacms build --local && next build", { stdio: "inherit" });
   }
