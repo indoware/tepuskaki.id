@@ -1,10 +1,12 @@
 // tina/config.ts
 import { defineConfig } from "tinacms";
 var branch = process.env.GITHUB_BRANCH || process.env.VERCEL_GIT_COMMIT_REF || process.env.HEAD || "main";
+var clientId = process.env.NEXT_PUBLIC_TINA_CLIENT_ID;
+var token = process.env.TINA_TOKEN;
 var config_default = defineConfig({
   branch,
-  clientId: process.env.NEXT_PUBLIC_TINA_CLIENT_ID || null,
-  token: process.env.TINA_TOKEN || null,
+  // Hanya gunakan clientId dan token jika keduanya tersedia (mode Tina Cloud)
+  ...clientId && token ? { clientId, token } : {},
   build: {
     outputFolder: "admin",
     publicFolder: "public"
